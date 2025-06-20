@@ -1,0 +1,7 @@
+G:\Learning stuff\gitnetcore2\publish\gitnetcore2.exe
+G:\Learning stuff\gitnetcore2\publish\appsettings.Development.json
+G:\Learning stuff\gitnetcore2\publish\appsettings.json
+G:\Learning stuff\gitnetcore2\publish\gitnetcore2.dll
+G:\Learning stuff\gitnetcore2\publish\gitnetcore2.deps.json
+G:\Learning stuff\gitnetcore2\publish\gitnetcore2.runtimeconfig.json
+G:\Learning stuff\gitnetcore2\publish\gitnetcore2.pdb
