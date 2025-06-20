@@ -37,6 +37,13 @@ pipeline {
             }
         }
 
+        stage('Stop IIS') {
+            steps {
+                echo 'Stopping IIS site'
+                bat 'iisreset /stop'
+            }
+        }
+
         stage('Copy to wwwroot') {
             steps {
                 echo 'Copy to C:\\wwwroot\\myproject'
