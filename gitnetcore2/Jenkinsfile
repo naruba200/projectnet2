@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('clone') {
+            steps {
+                echo 'Cloning source code'
+                git branch: 'main', url: 'https://github.com/huudqtmu/projectnet.git'
+            }
+        }
+
+        stage('restore package') {
+            steps {
+                echo 'Restore packages'
+                bat 'dotnet restore'
+            }
+        }
+
+        stage('build') {
+            steps {
+                echo 'Build project'
+                bat 'dotnet build --configuration Release'
+            }
+        }
+
+        stage('tests') {
+            steps {
+                echo 'Run tests'
+                bat 'dotnet test --no-build --verbosity normal'
+            }
+        }
+
+        stage('publish') {
+            steps {
+                echo 'Publishing to /publish'
+                bat 'dotnet publish -c Release -o ./publish'
+            }
+        }
+
+        stage('Copy to wwwroot') {
+            steps {
+                echo 'Copy to C:\\wwwroot\\myproject'
+                bat 'xcopy "%WORKSPACE%\\publish" "C:\\wwwroot\\myproject" /E /Y /I /R'
+            }
+        }
+
+        stage('Deploy to IIS') {
+            steps {
+                powershell '''
+                Import-Module WebAdministration
+                if (-not (Test-Path IIS:\\Sites\\MySite)) {
+                    New-Website -Name "MySite" -Port 81 -PhysicalPath "C:\\wwwroot\\myproject"
+                }
+                '''
+            }
+        }
+    }
+}
